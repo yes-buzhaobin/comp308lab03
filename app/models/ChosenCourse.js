@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ChosenCourseSchema = new Schema({
-    course_code:{
-        type:String,
-        required:true
+    course_code: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Course'
     },
     course_name:{
         type:String
@@ -19,11 +20,13 @@ const ChosenCourseSchema = new Schema({
         type:String
     },
     student_number:{
-        type:String
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Student'
     },
     email:{
         type:String
     }
 })
 
-module.exports = Course = mongoose.model('chosenCourses', ChosenCourseSchema)
+mongoose.model('ChosenCourse', ChosenCourseSchema);
