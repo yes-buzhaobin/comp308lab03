@@ -11,7 +11,7 @@ const Student = props => (
         <td>{props.student.email}</td>
         <td>{props.student.program}</td>
         <td>
-                <Link to={"/myStudentList/"+props.student.student_number}>List all choose courses</Link> 
+                <Link to={"/student_course_list/"+props.student.student_number}>List all choose courses</Link> 
         </td>
     </tr>
 )
