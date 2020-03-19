@@ -25,8 +25,8 @@
     "react-scripts": "3.4.0"
   },
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "nodemon server",
+    "dev": "nodemon server"
 
   },
   "eslintConfig": {
