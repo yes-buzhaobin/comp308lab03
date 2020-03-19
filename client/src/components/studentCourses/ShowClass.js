@@ -41,7 +41,7 @@ class ShowClass extends Component {
             <div className="container">
                 <div className="jumbotron mt-5">
                     <div className="col-sm-8 mx-auto">
-                        <h1 className="text-center">{this.props.match.params.course_code}</h1>
+                        <h1 className="text-center">List all students of {this.props.match.params.course_code}</h1>
                         <br />
                     </div>
                     <table className="table col-md-6 mx-auto">

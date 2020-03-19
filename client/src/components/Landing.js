@@ -9,7 +9,7 @@ const Course = props => (
         <td>{props.course.course_name}</td>
         <td>{props.course.section}</td>
         <td>{props.course.semester}</td>
-        {localStorage.studenttoken && localStorage.email !== 'foxpeer@gmail.com' ?  
+        {localStorage.studenttoken ?  
             (<td>
                 <Link to={"/showClass/"+props.course.course_code}>List Students</Link> 
             </td>)
@@ -45,7 +45,7 @@ class DisplayCourses extends Component {
             <div className="container">
                 <div className="jumbotron mt-5">
                     <div className="col-sm-8 mx-auto">
-                        <h1 className="text-center">COURSES</h1>
+                        <h1 className="text-center">List all courses</h1>
                     </div>
                     <table className="table col-md-6 mx-auto">
                         <thead>
