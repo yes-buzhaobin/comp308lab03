@@ -17,6 +17,7 @@ import MyCourseList from './components/studentCourses/MyCourseList';
 import SelectNewCourse from './components/studentCourses/SelectNewCourse';
 import AddSelectedCourse from './components/studentCourses/AddSelectedCourse';
 import ShowClass from './components/studentCourses/ShowClass';
+import StudentList from './components/studentCourses/StudentList';
 
 class App extends Component {
   render(){
@@ -40,6 +41,7 @@ class App extends Component {
             <Route exact path="/myCourseList/" component={MyCourseList} />                  
             <Route exact path="/selectNewCourse" component={SelectNewCourse} />
             <Route exact path="/showClass/:course_code" component={ShowClass} />
+            <Route exact path="/student_list" component={StudentList} />
           </div>
         </div>
       </Router>

@@ -110,6 +110,17 @@ students.get('/profile', (req, res) => {
 })
 
 
+students.get('/', (req, res) => {
+    //var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
+    console.log("getting student list");
+    Student.find()
+        .then( documents => {
+            res.status(200).json({
+                students: documents
+            })
+        });
+})
+
 const ConsoleLog = ({ children }) => {
     console.log(children);
     return false;

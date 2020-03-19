@@ -110,6 +110,11 @@ class Navbar extends Component{
                             Home
                             </Link>
                         </li>
+                        <li className="nav-item">
+                            <Link to="/student_list" className="my-nav-link">
+                                All students
+                            </Link>
+                        </li>
                     </ul>
                     {localStorage.studenttoken && localStorage.email !== 'foxpeer@gmail.com' ? studentLink : null}
                     { localStorage.email === 'foxpeer@gmail.com' ? adminLink : null}
