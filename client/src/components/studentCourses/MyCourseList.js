@@ -9,12 +9,12 @@ const Course = props => (
         <td>{props.course.course_name}</td>
         <td>{props.course.my_section}</td>
         <td>{props.course.semester}</td>
-        {localStorage.studenttoken && localStorage.email !== 'admin@yahoo.ca' ?  
+        {localStorage.studenttoken && localStorage.email !== 'foxpeer@gmail.com' ?  
             (<td>
                 <Link to={"/editSelectedCourse/"+props.course._id}>Edit</Link> 
             </td>)
         : null}
-        {localStorage.studenttoken && localStorage.email !== 'admin@yahoo.ca' ?  
+        {localStorage.studenttoken && localStorage.email !== 'foxpeer@gmail.com' ?  
             (<td>
                 <Link to={"/dropCourse/"+props.course._id}>Drop</Link> 
             </td>)

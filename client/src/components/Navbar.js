@@ -111,8 +111,8 @@ class Navbar extends Component{
                             </Link>
                         </li>
                     </ul>
-                    {localStorage.studenttoken && localStorage.email !== 'admin@yahoo.ca' ? studentLink : null}
-                    { localStorage.email === 'admin@yahoo.ca' ? adminLink : null}
+                    {localStorage.studenttoken && localStorage.email !== 'foxpeer@gmail.com' ? studentLink : null}
+                    { localStorage.email === 'foxpeer@gmail.com' ? adminLink : null}
                 </div>
                 <div className="d-flex flex-reverse bd-highlight mb-3 ustify-content-around" id="navbar2">
                     {localStorage.studenttoken ? workingLink : loginRegLink}

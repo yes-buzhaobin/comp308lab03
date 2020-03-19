@@ -10,10 +10,10 @@ const ChosenCourseSchema = new Schema({
         type:String
     },
     section:{
-        type:String
+        type:Number
     },
     my_section:{
-        type:String
+        type:Number
     },
     semester:{
         type:String

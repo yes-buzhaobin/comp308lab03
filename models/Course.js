@@ -10,7 +10,7 @@ const CourseSchema = new Schema({
         type:String
     },
     section:{
-        type:String
+        type:Number
     },
     semester:{
         type:String
