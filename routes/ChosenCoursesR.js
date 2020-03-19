@@ -27,7 +27,7 @@ chosenCourses.post('/createChosenCourse', (req, res) => {
     console.log(courseData);
     ChosenCourse.create(courseData)
     .then(course => {
-        res.json({ status: 'A chosen course added!'});
+        res.json({ status: 'A course has been added!'});
     })
     .catch(err => {
         res.send('Adding course error: ' + err);
@@ -35,7 +35,7 @@ chosenCourses.post('/createChosenCourse', (req, res) => {
 })
 
 chosenCourses.post('/updateChosenCourse/:id', (req, res) => {
-    console.log("try to update a course....");
+    console.log("update a course....");
     console.log(req.body);
     ChosenCourse.findById(req.params.id, function(err, course) {
         if(!course){
@@ -81,7 +81,7 @@ chosenCourses.get('/coursesByEmail/:email', (req, res) => {
                 });
                 // console.log("print ans:");
                  console.log(cCourses);
-                 console.log("cCOurse over");
+                 console.log("cCourse over");
                  console.log(documents);
                // console.log(ans);
                 // console.log("print ans over:");
