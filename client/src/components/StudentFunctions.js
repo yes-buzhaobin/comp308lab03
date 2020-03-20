@@ -1,4 +1,5 @@
 import axios from 'axios';
+//import axios from '../components/axiosConfig';
 
 export const register =  newStudent => {
     return axios
@@ -32,12 +33,12 @@ export const login =  student => {
     }})
     .then(res => {
         console.log('res after login ', res);
-        let name = res.data.student.first_name;
+        let student = res.data.student;
         localStorage.setItem('studenttoken', res.data.token);
-        localStorage.setItem('studentName', name);
-        localStorage.setItem('email', res.data.student.email);
-        localStorage.setItem('studentNumber', res.data.student.student_number);
-        //console.log("Res " + res.data.student.student_number);
+        localStorage.setItem('studentName', student.first_name);
+        localStorage.setItem('email', student.email);
+        localStorage.setItem('studentNumber', student.student_number);
+        console.log("student name in local storage: " + localStorage.studentName);
         return res.data;
     })
     .catch(err => {
@@ -47,7 +48,7 @@ export const login =  student => {
 
 export const logout =  student => {
     return axios
-    .get('http://localhost:5000/signout')
+    .get('http://localhost:5000/signout', {withCredentials: true})
     .then(res => {
         console.log('logout success ' + res);        
         localStorage.removeItem('studenttoken');

@@ -30,19 +30,25 @@ module.exports = function () {
     }));
     app.use(bodyParser.json()); //use middleware that only parses json
     app.use(cookieParser());
-    /*
+
+    //app.use(cors());
     app.use(function(req, res, next) {
 		res.header("Access-Control-Allow-Origin", "*");
-		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header('Access-Control-Allow-Credentials', true);
+        res.header('Access-Control-Allow-Headers', 'content-type, authorization, content-length, x-requested-with, accept, origin');
+        res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE, PATCH')
+        if (req.method === 'OPTIONS') {
+            return res.sendStatus(200);
+          }
 		next();
-    }); */
-    app.use(cors());
+    }); 
+    
     //
-    app.use(methodOverride()); // use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
+    //app.use(methodOverride()); // use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
     //handle the use of PUT or DELETE methods
     //override with POST having ?_method=DELETE or
     // ?_method=PUT
-    app.use(methodOverride('_method'));
+   // app.use(methodOverride('_method'));
     //saveUninitialized - orces a session that is "uninitialized" to be saved to the store
     //resave - forces the session to be saved back to the session store
     // Configure the 'session' middleware

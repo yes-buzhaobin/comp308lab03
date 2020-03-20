@@ -22,7 +22,7 @@ export default class DropCourse extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.course_code)
+        axios.get('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.student_number)
             .then(res => {
                 this.setState({
                     course_code: res.data.coursestudent.course.course_code,
@@ -38,7 +38,7 @@ export default class DropCourse extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
-        axios.delete('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.course_code
+        axios.delete('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.student_number
         )
             .then(res => {
                 console.log(res.data);

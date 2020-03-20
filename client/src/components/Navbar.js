@@ -51,7 +51,8 @@ class Navbar extends Component{
         const workingLink = (
             <ul className="navbar-nav mr-auto">
                 <li className="nav-name">
-                    {this.state.userName}
+                {localStorage.studentName}
+ 
                 </li>
                 <li className="nav-item">
                     <a href="/login" onClick={this.logOut.bind(this)} className="my-nav-link">
@@ -108,6 +109,11 @@ class Navbar extends Component{
                         <li className="nav-item">
                             <Link to="/" className="my-nav-link">
                             Home
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/course_list" className="my-nav-link">
+                                All Courses
                             </Link>
                         </li>
                         <li className="nav-item">

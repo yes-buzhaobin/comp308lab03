@@ -7,6 +7,7 @@ import Landing from './components/Landing';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
+import CourseList from './components/courses/CourseList';
 import DisplayCourses from './components/courses/DisplayCourses';
 import CreateCourse from './components/courses/CreateCourse';
 import EditCourse from './components/courses/EditCourse';
@@ -32,11 +33,12 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/displayCourses" component={DisplayCourses} />
+            <Route exact path="/course_list" component={CourseList} />
             <Route exact path="/createCourse" component={CreateCourse} />
             <Route exact path="/editCourse/:id" component={EditCourse} />
             <Route exact path="/deleteCourse/:id" component={DeleteCourse} />
             
-            <Route exact path="/addSelectedCourse/:id" component={AddSelectedCourse} />  
+            <Route exact path="/addSelectedCourse/:course_code" component={AddSelectedCourse} />  
             <Route exact path="/dropCourse/:course_code/students/:student_number" component={DropCourse} />     
             <Route exact path="/editSelectedCourse/:course_code/students/:student_number" component={EditSelectedCourse} />     
             <Route exact path="/myCourseList/" component={MyCourseList} />                  

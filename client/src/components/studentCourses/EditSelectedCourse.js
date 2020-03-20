@@ -22,7 +22,7 @@ export default class EditSelectedCourse extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.course_code)
+        axios.get('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.student_number)
         .then(res => {
             this.setState({
                 course_code: res.data.coursestudent.course.course_code,
@@ -43,7 +43,7 @@ export default class EditSelectedCourse extends Component {
             my_section:this.state.my_section
         };
 
-        axios.put('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.course_code,
+        axios.put('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.student_number,
             currentCourse
             )
             .then(res => {

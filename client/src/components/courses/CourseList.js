@@ -1,20 +1,23 @@
 import React, {Component} from 'react';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 
 const Course = props => (
     <tr>
-        <td>{props.course.course.course_code}</td>
-        <td>{props.course.course.course_name}</td>
-        <td>{props.course.my_section}</td>
-        <td>{props.course.course.semester}</td>
-        <td>{props.course.student.student_number}</td>
-        <td>{props.course.student.email}</td>
+        <td>{props.course.course_code}</td>
+        <td>{props.course.course_name}</td>
+        <td>{props.course.section}</td>
+        <td>{props.course.semester}</td>
+        {localStorage.studenttoken ?  
+            (<td>
+                <Link to={"/showClass/"+props.course.course_code}>List Students</Link> 
+            </td>)
+        : null}
     </tr>
 )
 
-class ShowClass extends Component {
+class CourseList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,11 +26,10 @@ class ShowClass extends Component {
     }
 
     componentDidMount() {
-        console.log("Show Class..");
-        axios.get('http://localhost:5000/api/courses/' + this.props.match.params.course_code+'/students' )
+        //console.log("CourseList");
+        axios.get('http://localhost:5000/api/courses')
             .then(res => {
-                console.log(res.data.coursestudentList);
-                this.setState({courses: res.data.coursestudentList});
+                this.setState({courses: res.data.courses});
             }).catch(function (error) {
                 console.log(error);
             })
@@ -43,8 +45,7 @@ class ShowClass extends Component {
             <div className="container">
                 <div className="jumbotron mt-5">
                     <div className="col-sm-8 mx-auto">
-                        <h1 className="text-center">List all students of {this.props.match.params.course_code}</h1>
-                        <br />
+                        <h1 className="text-center">List all courses</h1>
                     </div>
                     <table className="table col-md-6 mx-auto">
                         <thead>
@@ -53,8 +54,6 @@ class ShowClass extends Component {
                                 <th>Course Name</th>
                                 <th>Section</th>
                                 <th>Semester</th>
-                                <th>Student_number</th>
-                                <th>Student_email</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,4 +66,4 @@ class ShowClass extends Component {
     }
 }
 
-export default ShowClass
+export default CourseList

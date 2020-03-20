@@ -11,7 +11,7 @@ const Course = props => (
         <td>{props.course.semester}</td>
         { !props.course.selected ?  
             (<td>
-                <Link to={"/addSelectedCourse/"+props.course._id}>Choose</Link> 
+                <Link to={"/addSelectedCourse/"+props.course.course_code}>Choose</Link> 
             </td>)
         : null}
     </tr>

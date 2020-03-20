@@ -17,38 +17,51 @@ export default class AddSelectedCourse extends Component {
             course_name: '',
             section: '',
             my_section:'1',
-            semester: ''
+            semester: '',
+            error_message: ''
         }
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/courses/'+this.props.match.params.id)
+        this.setState({error_message: ""});
+        axios.get('http://localhost:5000/api/courses/'+this.props.match.params.course_code)
             .then(res => {
+                var course = res.data.course;
                 this.setState({
-                    course_code: res.data.course_code,
-                    course_name:res.data.course_name,
-                    my_section:'1',
-                    section:res.data.section,
-                    semester:res.data.semester
+                    course_code: course.course_code,
+                    course_name: course.course_name,
+                    my_section: 1,
+                    section: course.section,
+                    semester: course.semester
                 });
             })
             .catch(function(err){
                 console.log(err);
-            })
+                this.setState({
+                    error_message: err
+                });
+            });
     }
+    
     onSubmit(e) {
         e.preventDefault();
 
         const currentCourse = {
             my_section:this.state.my_section
         };
+        this.setState({error_message: ""});
 
         axios.post('http://localhost:5000/api/courses/'+this.state.course_code+'/students/'+ localStorage.studentNumber
             , currentCourse
         )
             .then(res => {
-                console.log(res.data);
+                console.log(res);
                 this.props.history.push('/myCourseList');
+            }).catch(function(err){
+                console.log(err);
+                this.setState({
+                    error_message: err
+                });
             });
             
     }
@@ -81,7 +94,8 @@ export default class AddSelectedCourse extends Component {
                         <div className="FormFix">
                             <br />
                             <h3>Choose a Course</h3>
-                            <hr></hr>
+        <hr></hr>
+        <h>{this.state.error_message}</h>
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <label>Course Code:</label>

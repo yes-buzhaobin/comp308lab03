@@ -4,7 +4,7 @@ const Student = mongoose.model('Student');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
-const jwtExpirySeconds = 300;
+const jwtExpirySeconds = 3000;
 const jwtKey =config.secretKey;
 
 //
@@ -164,11 +164,17 @@ exports.isSignedIn = (req, res) => {
 exports.requiresLogin = function (req, res, next) {
     // Obtain the session token from the requests cookies,
 	// which come with every request
-	const token = req.cookies.token;
-	console.log(token);
+	var token = req.cookies.token;
+	console.log("token from request cookie: "+ token);
+	if (!token) {
+		token = req.headers.authorization;
+		console.log(req.headers);
+		console.log("token from request header Authorization: "+ token);
+	}
+	
 	// if the cookie is not set, return an unauthorized error
 	if (!token) {
-	  return res.send({ error: 'You need login first' }).status(401).end();
+	  return res.status(401).json({ error: 'no token was found in request. You need login first.' });
 	}
 	var payload;
 	try {
@@ -177,16 +183,16 @@ exports.requiresLogin = function (req, res, next) {
 	  // if the token is invalid (if it has expired according to the expiry time we set on sign in),
 	  // or if the signature does not match
 	  payload = jwt.verify(token, jwtKey);
-	  console.log('in requiresLogin - payload:',payload);
+	  console.log('in requires Login - payload:', payload);
 	  req.student_number = payload.student_number;
 	  req.email = payload.email;
 	} catch (e) {
 	  if (e instanceof jwt.JsonWebTokenError) {
 		// if the error thrown is because the JWT is unauthorized, return a 401 error
-		return res.status(401).end();
+		return res.status(401).end("invalid token: " + e);
 	  }
 	  // otherwise, return a bad request error
-	  return res.status(400).end();
+	  return res.status(400).end("invalid request: " + e);
 	}
 	// student is authenticated
 	//call next function in line
