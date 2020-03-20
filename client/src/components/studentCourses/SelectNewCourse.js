@@ -27,7 +27,7 @@ class SelectNewCourse extends Component {
 
     componentDidMount() {
         //console.log("DisplayCourses");
-        axios.get('http://localhost:5000/chosenCourses/coursesByEmail/' + localStorage.email)
+        axios.get('http://localhost:5000/api/courses')
             .then(res => {
                 console.log("get it");
                 console.log(res.data.courses);

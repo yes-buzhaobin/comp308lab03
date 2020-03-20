@@ -73,7 +73,7 @@ class Register extends React.Component {
                                     <label htmlFor="password" className="labelRight">Password:</label>
                                 </div>
                                 <div className="col-8">
-                                    <input type="passwords"
+                                    <input type="password"
                                     className="form-control"
                                     name="password"
                                     placeholder="Enter password"

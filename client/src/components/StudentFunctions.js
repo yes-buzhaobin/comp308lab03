@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const register =  newStudent => {
     return axios
-    .post('http://localhost:5000/students/register', {
+    .post('http://localhost:5000/api/students', {
         student_number: newStudent.student_number,
         password:newStudent.password,
         first_name:newStudent.first_name,
@@ -25,12 +25,13 @@ export const register =  newStudent => {
 }
 export const login =  student => {
     return axios
-    .post('http://localhost:5000/students/login', {
-        email: student.email,
-        password: student.password
-    })
+    .post('http://localhost:5000/signin', {
+        auth:{
+            email: student.email,
+            password: student.password
+    }})
     .then(res => {
-        //console.log('res.token', res.data.token);
+        console.log('res after login ', res);
         let name = res.data.student.first_name;
         localStorage.setItem('studenttoken', res.data.token);
         localStorage.setItem('studentName', name);
@@ -38,6 +39,23 @@ export const login =  student => {
         localStorage.setItem('studentNumber', res.data.student.student_number);
         //console.log("Res " + res.data.student.student_number);
         return res.data;
+    })
+    .catch(err => {
+        console.log("Error " + err);
+    });
+}
+
+export const logout =  student => {
+    return axios
+    .get('http://localhost:5000/signout')
+    .then(res => {
+        console.log('logout success ' + res);        
+        localStorage.removeItem('studenttoken');
+        localStorage.removeItem('studentName');
+        localStorage.removeItem('email');
+        localStorage.removeItem('studentNumber');
+        //console.log("Res " + res.data.student.student_number);
+        return { status: 'logout success' };
     })
     .catch(err => {
         console.log("Error " + err);

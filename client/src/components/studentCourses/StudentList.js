@@ -26,7 +26,7 @@ class StudentList extends Component {
 
     componentDidMount() {
         console.log("Show student list..");
-        axios.get('http://localhost:5000/students/' )
+        axios.get('http://localhost:5000/api/students' )
             .then(res => {
                 console.log(res.data.students);
                 this.setState({students: res.data.students});

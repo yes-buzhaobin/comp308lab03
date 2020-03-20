@@ -70,7 +70,7 @@ exports.signin = function(req, res, next) {
 				// set the cookie as the token string, with a similar max age as the token
 				// here, the max age is in milliseconds
 				res.cookie('token', token, { maxAge: jwtExpirySeconds * 1000, httpOnly: true});
-				res.status(200).send({ screen: student.student_number, message: "login succeed" });
+				res.status(200).send({ token: token, student: student, message: "login succeed" });
 				//
 				//res.json({status:"success", message: "student found!!!", data:{student:
 				//student, token:token}});

@@ -40,7 +40,7 @@ export default class CreateCourse extends Component {
             semester: ''
         }
 
-        axios.post('http://localhost:5000/courses/createCourse', newCourse)
+        axios.post('http://localhost:5000/api/courses', newCourse)
             .then(res => {
                 console.log(res.data);
                 this.props.history.push('/displayCourses');

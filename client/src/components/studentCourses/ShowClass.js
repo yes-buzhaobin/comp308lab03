@@ -22,10 +22,10 @@ class ShowClass extends Component {
 
     componentDidMount() {
         console.log("Show Class..");
-        axios.get('http://localhost:5000/chosenCourses/getStudents/' + this.props.match.params.course_code )
+        axios.get('http://localhost:5000/api/courses/' + this.props.match.params.course_code+'/students' )
             .then(res => {
-                console.log(res.data.courses);
-                this.setState({courses: res.data.courses});
+                console.log(res.data.coursestudentList);
+                this.setState({courses: res.data.coursestudentList});
             }).catch(function (error) {
                 console.log(error);
             })

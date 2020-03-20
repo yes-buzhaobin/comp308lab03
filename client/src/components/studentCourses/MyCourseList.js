@@ -32,7 +32,7 @@ class DisplayCourses extends Component {
 
     componentDidMount() {
         console.log("GetChosenCoursesByEmail = " + localStorage.email);
-        axios.get('http://localhost:5000/chosenCourses/getAllChosenCoursesByEmail/' + localStorage.email)
+        axios.get('http://localhost:5000/api/students/' + localStorage.student_number+"/courses")
             .then(res => {
                 console.log(res.data.courses);
                 this.setState({courses: res.data.courses});

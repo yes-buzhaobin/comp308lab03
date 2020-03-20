@@ -10,10 +10,10 @@ const Course = props => (
         <td>{props.course.section}</td>
         <td>{props.course.semester}</td>
         <td>
-             <Link to={"/editCourse/"+props.course._id}>Edit</Link> 
+             <Link to={"/editCourse/"+props.course.course_code}>Edit</Link> 
         </td>
         <td>
-            <Link to={"/deleteCourse/"+props.course._id}>Delete</Link> 
+            <Link to={"/deleteCourse/"+props.course.course_code}>Delete</Link> 
         </td>
     </tr>
 )
@@ -28,7 +28,7 @@ class DisplayCourses extends Component {
 
     componentDidMount() {
         //console.log("DisplayCourses");
-        axios.get('http://localhost:5000/courses/courses')
+        axios.get('http://localhost:5000/api/courses')
             .then(res => {
                 this.setState({courses: res.data.courses});
             }).catch(function (error) {

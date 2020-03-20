@@ -37,8 +37,8 @@ class App extends Component {
             <Route exact path="/deleteCourse/:id" component={DeleteCourse} />
             
             <Route exact path="/addSelectedCourse/:id" component={AddSelectedCourse} />  
-            <Route exact path="/dropCourse/:id" component={DropCourse} />     
-            <Route exact path="/editSelectedCourse/:id" component={EditSelectedCourse} />     
+            <Route exact path="/dropCourse/:course_code/students/:student_number" component={DropCourse} />     
+            <Route exact path="/editSelectedCourse/:course_code/students/:student_number" component={EditSelectedCourse} />     
             <Route exact path="/myCourseList/" component={MyCourseList} />                  
             <Route exact path="/selectNewCourse" component={SelectNewCourse} />
             <Route exact path="/showClass/:course_code" component={ShowClass} />

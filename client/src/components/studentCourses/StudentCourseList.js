@@ -5,10 +5,10 @@ import axios from 'axios';
 
 const Course = props => (
     <tr>
-        <td>{props.course.course_code}</td>
-        <td>{props.course.course_name}</td>
+        <td>{props.course.course.course_code}</td>
+        <td>{props.course.course.course_name}</td>
         <td>{props.course.my_section}</td>
-        <td>{props.course.semester}</td>
+        <td>{props.course.course.semester}</td>
        
     </tr>
 )
@@ -23,10 +23,10 @@ class StudentCourseList extends Component {
 
     componentDidMount() {
 
-        axios.get('http://localhost:5000/students/'+ + this.props.match.params.student_number+'/courses')
+        axios.get('http://localhost:5000/api/students/'+ this.props.match.params.student_number+'/courses')
             .then(res => {
-                console.log(res.data.courses);
-                this.setState({courses: res.data.courses});
+                console.log(res.data.coursestudentList);
+                this.setState({courses: res.data.coursestudentList});
             }).catch(function (error) {
                 console.log(error);
             })

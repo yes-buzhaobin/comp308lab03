@@ -27,7 +27,7 @@ class DisplayCourses extends Component {
 
     componentDidMount() {
         //console.log("DisplayCourses");
-        axios.get('http://localhost:5000/courses/courses')
+        axios.get('http://localhost:5000/api/courses')
             .then(res => {
                 this.setState({courses: res.data.courses});
             }).catch(function (error) {

@@ -22,7 +22,7 @@ export default class DeleteCourse extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/courses/'+this.props.match.params.id)
+        axios.get('http://localhost:5000/api/courses/'+this.props.match.params.id)
             .then(res => {
                 this.setState({
                     course_code: res.data.course_code,
@@ -39,7 +39,7 @@ export default class DeleteCourse extends Component {
         e.preventDefault();
         console.log("onSubmit call");
         
-        axios.delete('http://localhost:5000/courses/' 
+        axios.delete('http://localhost:5000/api/courses/' 
             + this.props.match.params.id
         )
             .then(res => {

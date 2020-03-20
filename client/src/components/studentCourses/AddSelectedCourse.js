@@ -40,16 +40,10 @@ export default class AddSelectedCourse extends Component {
         e.preventDefault();
 
         const currentCourse = {
-            course_code: this.state.course_code,
-            course_name:this.state.course_name,
-            section:this.state.section,
-            my_section:this.state.my_section,
-            semester:this.state.semester,
-            email:localStorage.email,
-            student_number:localStorage.studentNumber
+            my_section:this.state.my_section
         };
 
-        axios.post('http://localhost:5000/chosenCourses/createChosenCourse/' 
+        axios.post('http://localhost:5000/api/courses/'+this.state.course_code+'/students/'+ localStorage.studentNumber
             , currentCourse
         )
             .then(res => {
