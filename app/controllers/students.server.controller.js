@@ -98,7 +98,10 @@ exports.studentByID = function (req, res, next, student_number) {
 			if (student) {
 				console.log("found student from db: "+student);
 			} else {
-				console.error("student not found by student_number")
+				console.error("student not found by student_number");
+				return res.status(404).json({"code": 404, 
+											 "message": "the student "+student_number+" is not found."
+											});
 			}
 			// Set the 'req.student' property
             req.student = student;
@@ -131,7 +134,7 @@ exports.studentByEmail = function (req, res, next, email) {
 //update a student by id
 exports.update = function(req, res, next) {
     console.log(req.body);
-    Student.findByIdAndUpdate(req.student._id, req.body, function (err, student) {
+    Student.findByIdAndUpdate(req.student._id, req.body, {new : true }, function (err, student) {
       if (err) {
         console.log(err);
         return next(err);
@@ -158,11 +161,13 @@ exports.listCourse = function (req, res, next){
     console.log("get courses by student number .....");
     
     ChosenCourse.find({
-        student_number: req.params.student_number
-    }).then( courses => {
+        student: req.student.id,
+    }).populate('course').populate('student').then( coursestudentList => {
         res.status(200).json({
-            "courses": courses}
+            "coursestudentList": coursestudentList}
             );
+    }).catch(err => {
+        res.status(400).send('something wrong when query coursestudents list: ' + err);
     });
 }
 

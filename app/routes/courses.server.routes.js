@@ -16,8 +16,10 @@ module.exports = function (app) {
 
 
         //
+        app.route('/api/courses/:course_code/students') 
+        .get(auth.requiresLogin,  courses.listStudent);
+
         app.route('/api/courses/:course_code/students/:student_number') 
-            .get(auth.requiresLogin,  courses.listStudent)
             .post(auth.requiresLogin,  courses.addStudent)           
             .put(auth.requiresLogin,  courses.updateStudent)
             .delete(auth.requiresLogin, courses.deleteStudent);

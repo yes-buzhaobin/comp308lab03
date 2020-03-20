@@ -53,8 +53,11 @@ exports.courseByID = function (req, res, next, course_code) {
 			// Call the next middleware with an error message
 			return next(err);
 		}
-    if (!course) return next(new Error('Failed to load course '
-            + course_code));
+    if (!course) {
+        return res.status(404).json({"code": 404, 
+											 "message": "the course "+course_code+" is not found."
+											});
+        }
         req.course = course;
         console.log('in course By CourseCode:', req.course)
         next();
@@ -68,11 +71,12 @@ exports.read = function (req, res) {
 //update a course by course code
 exports.update = function(req, res, next) {
     console.log(req.body);
-    Course.findByIdAndUpdate(req.course.id, req.body, function (err, course) {
+    Course.findByIdAndUpdate(req.course.id, req.body, {new : true }, function (err, course) {
       if (err) {
         console.log(err);
         return next(err);
       }
+      console.log(course);
       res.json({"course": course});
     });
 };
@@ -97,11 +101,13 @@ exports.listStudent = function (req, res, next){
     console.log("get student by course code.....");
     
     ChosenCourse.find({
-        course_code: req.params.course_code
-    }).then( courses => {
+        course: req.course.id,
+    }).populate('course').populate('student').then( coursestudentList => {
         res.status(200).json({
-            "courses": courses}
+            "coursestudentList": coursestudentList}
             );
+    }).catch(err => {
+        res.status(400).send('something wrong when query coursestudents list: ' + err);
     });
 }
 
@@ -110,39 +116,48 @@ exports.addStudent = function (req, res, next){
     console.log("try to save a chosen course....");
     console.log(req.body);
     const courseData = {
-        course_code: req.course.course_code,
-        course_name:req.course.course_name,
-        section:req.course.section,
+        course: req.course, 
         my_section:req.body.my_section,
-        semester:req.course.semester,
-        student_number:req.student.student_number,
-        email:req.student.email
+        student: req.student
     };
     console.log(courseData);
-    ChosenCourse.create(courseData)
-    .then(course => {
-        res.json({ status: 'A course has been added!'});
-    })
-    .catch(err => {
+    // check if already in db
+    ChosenCourse.findOne({
+        course: req.course.id,
+        student: req.student.id
+    }).then (course => {
+        if(course){
+            return res.status(400).send("this course "+req.course.course_code+" has been registered by this student " + req.student.email);
+        }
+
+        ChosenCourse.create(courseData)
+        .then(coursestudent => {
+            res.status(201).json({ "coursestudent": coursestudent});
+        })
+        .catch(err => {
+            res.send('Adding course error: ' + err);
+        });
+    }).catch(err => {
         res.send('Adding course error: ' + err);
-    })
+    });
+
 }
 
 //update  a Student section under certain Course
 exports.updateStudent = function (req, res, next){
     console.log("update a course registration ...");
     console.log(req.body);
-    ChosenCourse.find_one({
-        course_code: req.course.course_code,
-        student_number: req.student.student_number
-    }).then (course => {
+    ChosenCourse.findOne({
+        course: req.course.id,
+        student: req.student.id
+    }).populate('course').populate('student').then (course => {
         if(!course){
             res.status(404).send('Data is not found');
             
         } else {
             course.my_section=req.body.my_section;
-            course.save().then(course => {
-                res.json('A student course registration updated.');
+            course.save().then(coursestudent => {
+                res.json({ "coursestudent": coursestudent});
             })
             .catch(err => {
                 res.status(400).send("student course registration Update failed: "+ err);
@@ -157,20 +172,19 @@ exports.updateStudent = function (req, res, next){
 
 //delete Student under certain Course
 exports.deleteStudent = function (req, res, next){
-    console.log("update a course registration ...");
+    console.log("delete a course registration ...");
     console.log(req.body);
-    ChosenCourse.find_one({
-        course_code: req.course.course_code,
-        student_number: req.student.student_number
+    ChosenCourse.findOne({
+        course: req.course.id,
+        student: req.student.id
     }).then (course => {
         if(!course){
             res.status(404).send('the course already been dropped.');
             
         } else {
-            course.my_section=req.body.my_section;
             course.delete().then(result => {
                 console.log(result);
-                res.status(200).json({message: "student drop course success!"});
+                res.status(204).json({message: "student drop course success!"});
             });
         }
     }).catch(err => {

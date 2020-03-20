@@ -11,3 +11,14 @@ curl -X POST http://localhost:5000/api/students -d
 	"program": "Software"
 }
 
+
+Post http://localhost:5000/api/courses/
+
+{
+	"course_code": "COMP308",
+	"course_name": "Emergency Tech",
+	"section": 8,
+	"semester": "2020Spring"
+
+
+}
