@@ -111,6 +111,25 @@ exports.listStudent = function (req, res, next){
     });
 }
 
+// get a student choose a course detail
+exports.getStudent = function (req, res, next){
+    console.log("get a course taken by a student ...");
+    ChosenCourse.findOne({
+        course: req.course.id,
+        student: req.student.id
+    }).populate('course').populate('student').then (coursestudent => {
+        if(!coursestudent){
+            res.status(404).send('Data is not found');            
+        } else {            
+            res.json({ "coursestudent": coursestudent});            
+        }
+    }).catch(err => {
+        res.status(400).send("query student course registration failed: "+err);
+    });
+    
+}
+
+
 //add a Student under certain Course
 exports.addStudent = function (req, res, next){
     console.log("try to save a chosen course....");
