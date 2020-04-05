@@ -1,0 +1,24 @@
+curl -X POST http://localhost:5000/api/students -d
+{
+	"student_number": 100003,
+	"password": "123456",
+	"email": "foxpeer3@gmail.com",
+	"first_name": "liping3",
+	"last_name": "wu",
+	"address": "888 test st",
+	"city": "toronto",
+	"phone_number": "888-888-8888",
+	"program": "Software"
+}
+
+
+Post http://localhost:5000/api/courses/
+
+{
+	"course_code": "COMP308",
+	"course_name": "Emergency Tech",
+	"section": 8,
+	"semester": "2020Spring"
+
+
+}

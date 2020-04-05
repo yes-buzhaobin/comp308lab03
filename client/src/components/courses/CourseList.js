@@ -9,16 +9,15 @@ const Course = props => (
         <td>{props.course.course_name}</td>
         <td>{props.course.section}</td>
         <td>{props.course.semester}</td>
-        <td>
-             <Link to={"/editCourse/"+props.course.course_code}>Edit</Link> 
-        </td>
-        <td>
-            <Link to={"/deleteCourse/"+props.course.course_code}>Delete</Link> 
-        </td>
+        {localStorage.studenttoken ?  
+            (<td>
+                <Link to={"/showClass/"+props.course.course_code}>List Students</Link> 
+            </td>)
+        : null}
     </tr>
 )
 
-class DisplayCourses extends Component {
+class CourseList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,7 +26,7 @@ class DisplayCourses extends Component {
     }
 
     componentDidMount() {
-        //console.log("DisplayCourses");
+        //console.log("CourseList");
         axios.get('http://localhost:5000/api/courses')
             .then(res => {
                 this.setState({courses: res.data.courses});
@@ -46,7 +45,7 @@ class DisplayCourses extends Component {
             <div className="container">
                 <div className="jumbotron mt-5">
                     <div className="col-sm-8 mx-auto">
-                        <h1 className="text-center">COURSES</h1>
+                        <h1 className="text-center">List all courses</h1>
                     </div>
                     <table className="table col-md-6 mx-auto">
                         <thead>
@@ -67,4 +66,4 @@ class DisplayCourses extends Component {
     }
 }
 
-export default DisplayCourses
+export default CourseList

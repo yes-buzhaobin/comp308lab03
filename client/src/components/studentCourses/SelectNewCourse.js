@@ -11,7 +11,7 @@ const Course = props => (
         <td>{props.course.semester}</td>
         { !props.course.selected ?  
             (<td>
-                <Link to={"/addSelectedCourse/"+props.course._id}>Choose</Link> 
+                <Link to={"/addSelectedCourse/"+props.course.course_code}>Choose</Link> 
             </td>)
         : null}
     </tr>
@@ -27,7 +27,7 @@ class SelectNewCourse extends Component {
 
     componentDidMount() {
         //console.log("DisplayCourses");
-        axios.get('http://localhost:5000/chosenCourses/coursesByEmail/' + localStorage.email)
+        axios.get('http://localhost:5000/api/courses')
             .then(res => {
                 console.log("get it");
                 console.log(res.data.courses);

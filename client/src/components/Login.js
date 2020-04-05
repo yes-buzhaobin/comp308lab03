@@ -25,8 +25,7 @@ class Login extends Component {
         };
         
         login(student).then(res => {
-                console.log(res);
-                window.location.reload();
+                console.log(res);               
                 this.props.history.push(`/`);
         });
     }

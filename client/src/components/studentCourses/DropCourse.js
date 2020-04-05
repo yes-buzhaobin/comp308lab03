@@ -22,14 +22,14 @@ export default class DropCourse extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/chosenCourses/'+this.props.match.params.id)
+        axios.get('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.student_number)
             .then(res => {
                 this.setState({
-                    course_code: res.data.course_code,
-                    course_name:res.data.course_name,
-                    my_section:res.data.my_section,
-                    section:res.data.section,
-                    semester:res.data.semester
+                    course_code: res.data.coursestudent.course.course_code,
+                    course_name:res.data.coursestudent.course.course_name,
+                    my_section:res.data.coursestudent.my_section,
+                    section:res.data.coursestudent.course.section,
+                    semester:res.data.coursestudent.course.semester
                 });
             })
             .catch(function(err){
@@ -38,8 +38,7 @@ export default class DropCourse extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
-        axios.delete('http://localhost:5000/chosenCourses/' 
-            + this.props.match.params.id
+        axios.delete('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.student_number
         )
             .then(res => {
                 console.log(res.data);

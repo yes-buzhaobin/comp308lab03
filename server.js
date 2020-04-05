@@ -1,37 +1,20 @@
-var express = require('express');
-var cors = require('cors');
-var bodyPaser = require('body-parser');
+// The server.js file is the main file of your Node.js application 
+// It will load the express.js file as a module to bootstrap your Express application
+//
+//The process.env.NODE_ENV variable is set to the default 'development‘
+//value if itdoesn 't exist.
+// Set the 'NODE_ENV' variable
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+// Load the module dependencies
+var mongoose = require('./config/mongoose'),
+    express = require('./config/express');
+// Create a new Mongoose connection instance
+var db = mongoose();
+// Create a new Express application instance
 var app = express();
-var mongoose = require('mongoose');
-var port = process.env.PORT || 5000
-
-app.use(bodyPaser.json());
-app.use(cors());
-app.use(
-    bodyPaser.urlencoded({
-        extended:false
-    })
-)
-
-const mongooseURI = 'mongodb://localhost:27017/lab3';
-
-mongoose
-    .connect(mongooseURI, {useNewUrlParser:true})
-    .then(() => console.log("MongoDB connected!"))
-    .catch(err => console.log(err));
-
-    var Students = require('./routes/StudentsR');
-
-    app.use('/students', Students)
-
-    var Courses = require('./routes/CoursesR');
-
-    app.use('/courses', Courses);
-
-    var ChosenCourses = require('./routes/ChosenCoursesR');
-
-    app.use('/chosenCourses', ChosenCourses);
-
-    app.listen(port, () => {
-        console.log("Servr is running on port: " + port);
-    })
+// Use the Express application instance to listen to the '3000' port
+app.listen(5000);
+// Use the module.exports property to expose our Express application instance for external usage
+module.exports = app; //returns the application object
+// Log the server status to the console
+console.log('Server running at http://localhost:5000/');

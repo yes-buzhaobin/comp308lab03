@@ -21,7 +21,7 @@ export default class EditCourse extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/courses/'+this.props.match.params.id)
+        axios.get('http://localhost:5000/api/courses/'+this.props.match.params.id)
             .then(res => {
                 this.setState({
                     course_code: res.data.course_code,
@@ -44,7 +44,7 @@ export default class EditCourse extends Component {
             semester:this.state.semester
         };
 
-        axios.post('http://localhost:5000/courses/update/' 
+        axios.put('http://localhost:5000/api/courses/' 
             + this.props.match.params.id, currentCourse
         )
             .then(res => {

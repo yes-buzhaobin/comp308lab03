@@ -22,36 +22,30 @@ export default class EditSelectedCourse extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/chosenCourses/'+this.props.match.params.id)
-            .then(res => {
-                this.setState({
-                    course_code: res.data.course_code,
-                    course_name:res.data.course_name,
-                    my_section:res.data.my_section,
-                    section:res.data.section,
-                    semester:res.data.semester
-                });
-            })
-            .catch(function(err){
-                console.log(err);
-            })
+        axios.get('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.student_number)
+        .then(res => {
+            this.setState({
+                course_code: res.data.coursestudent.course.course_code,
+                course_name:res.data.coursestudent.course.course_name,
+                my_section:res.data.coursestudent.my_section,
+                section:res.data.coursestudent.course.section,
+                semester:res.data.coursestudent.course.semester
+            });
+        })
+        .catch(function(err){
+            console.log(err);
+        })
     }
     onSubmit(e) {
         e.preventDefault();
 
         const currentCourse = {
-            course_code: this.state.course_code,
-            course_name:this.state.course_name,
-            section:this.state.section,
-            my_section:this.state.my_section,
-            semester:this.state.semester,
-            email:localStorage.email,
-            student_number:localStorage.studentNumber
+            my_section:this.state.my_section
         };
 
-        axios.post('http://localhost:5000/chosenCourses/updateChosenCourse/' 
-            + this.props.match.params.id , currentCourse
-        )
+        axios.put('http://localhost:5000/api/courses/'+this.props.match.params.course_code+'/students/'+this.props.match.params.student_number,
+            currentCourse
+            )
             .then(res => {
                 console.log(res.data);
                 this.props.history.push('/myCourseList');

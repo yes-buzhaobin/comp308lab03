@@ -5,10 +5,12 @@ import axios from 'axios';
 
 const Course = props => (
     <tr>
-        <td>{props.course.course_name}</td>
+        <td>{props.course.course.course_code}</td>
+        <td>{props.course.course.course_name}</td>
         <td>{props.course.my_section}</td>
-        <td>{props.course.student_number}</td>
-        <td>{props.course.email}</td>
+        <td>{props.course.course.semester}</td>
+        <td>{props.course.student.student_number}</td>
+        <td>{props.course.student.email}</td>
     </tr>
 )
 
@@ -22,10 +24,10 @@ class ShowClass extends Component {
 
     componentDidMount() {
         console.log("Show Class..");
-        axios.get('http://localhost:5000/chosenCourses/getStudents/' + this.props.match.params.course_code )
+        axios.get('http://localhost:5000/api/courses/' + this.props.match.params.course_code+'/students' )
             .then(res => {
-                console.log(res.data.courses);
-                this.setState({courses: res.data.courses});
+                console.log(res.data.coursestudentList);
+                this.setState({courses: res.data.coursestudentList});
             }).catch(function (error) {
                 console.log(error);
             })
@@ -41,14 +43,16 @@ class ShowClass extends Component {
             <div className="container">
                 <div className="jumbotron mt-5">
                     <div className="col-sm-8 mx-auto">
-                        <h1 className="text-center">{this.props.match.params.course_code}</h1>
+                        <h1 className="text-center">List all students of {this.props.match.params.course_code}</h1>
                         <br />
                     </div>
                     <table className="table col-md-6 mx-auto">
                         <thead>
                             <tr>
+                                <th>Course Code</th>
                                 <th>Course Name</th>
                                 <th>Section</th>
+                                <th>Semester</th>
                                 <th>Student_number</th>
                                 <th>Student_email</th>
                             </tr>

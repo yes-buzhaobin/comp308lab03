@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 
 class Profile extends Component {
     constructor() {
@@ -18,19 +18,25 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        const token = localStorage.studenttoken;
-        console.log("token = " + token);
-        const decoded = jwt_decode(token);
-        this.setState({
-            student_numer:decoded.student_number,
-            first_name:decoded.first_name,
-            last_name:decoded.last_name,
-            address:decoded.address,
-            city:decoded.city,
-            phone_number:decoded.phone_number,
-            email:decoded.email,
-            program:decoded.program
-        })
+        const student_number = localStorage.studentNumber;
+        axios.get('http://localhost:5000/api/students/' + student_number )
+            .then(res => {
+                console.log(res.data);
+                var student = res.data.student;
+                this.setState({
+                    student_numer: student.student_number,
+                    first_name: student.first_name,
+                    last_name: student.last_name,
+                    address: student.address,
+                    city: student.city,
+                    phone_number: student.phone_number,
+                    email: student.email,
+                    program: student.program
+                })
+            }).catch(function (error) {
+                console.log(error);
+            });
+        
     }
 
     render() {
